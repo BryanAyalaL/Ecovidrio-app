@@ -20,7 +20,7 @@ class SignInPageState extends State<SignInPage> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: white,
-          title: Text('Sign In',
+          title: Text('Iniciar sección',
               style: TextStyle(
                   color: Colors.grey, fontFamily: 'Poppins', fontSize: 15)),
           actions: <Widget>[
@@ -36,7 +36,7 @@ class SignInPageState extends State<SignInPage> {
                   ),
                 );
               },
-              child: Text('Sign Up', style: contrastText),
+              child: Text('Registrase', style: contrastText),
             )
           ],
         ),
@@ -54,14 +54,24 @@ class SignInPageState extends State<SignInPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text('Welcome Back!', style: h3),
-                      Text('Howdy, let\'s authenticate', style: taglineText),
-                      fryoTextInput('Username'),
-                      fryoPasswordInput('Password'),
+                      Text('Bienvenido de nuevo', style: h3),
+                      Text('hola, vamos a autenticarte', style: taglineText),
+                      fryoTextInput('Correo eletronico'),
+                      fryoPasswordInput('Contraseña'),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          /*Navigator.push(
+                            context,
+                            PageTransition(
+                              alignment: Alignment.center,
+                              type: PageTransitionType.fade,
+                              duration: Duration(milliseconds: 300),
+                              child: recuperar_contraseñaPage(),
+                            ),
+                          );*/
+                        },
                         child:
-                            Text('Forgot Password?', style: contrastTextBold),
+                            Text('Olvidaste la contraseña?', style: contrastTextBold),
                       )
                     ],
                   ),

@@ -28,12 +28,12 @@ class WelcomePageState extends State<WelcomePage> {
           Image.asset('images/welcome.png', width: 190, height: 190),
           Container(
             margin: EdgeInsets.only(bottom: 10, top: 0),
-            child: Text('Fryo!', style: logoStyle),
+            child: Text('Eco vidrio', style: logoStyle),
           ),
           Container(
             width: 200,
             margin: EdgeInsets.only(bottom: 0),
-            child: froyoTextBtn('Sign In', () {
+            child: froyoTextBtn('Iniciar sección', () {
               Navigator.pushReplacement(
                   context,
                   PageTransition(
@@ -46,7 +46,7 @@ class WelcomePageState extends State<WelcomePage> {
           Container(
             width: 200,
             padding: EdgeInsets.all(0),
-            child: froyoOutlinedBtn('Sign Up', () {
+            child: froyoOutlinedBtn('Registrase', () {
               Navigator.pushReplacement(
                   context,
                   PageTransition(
@@ -57,22 +57,6 @@ class WelcomePageState extends State<WelcomePage> {
               // Navigator.of(context).pushReplacementNamed('/signup');
             }),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 25),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text('Langauage:', style: TextStyle(color: darkText)),
-                Container(
-                  margin: EdgeInsets.only(left: 6),
-                  child: Text('English >',
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w500)),
-                )
-              ],
-            ),
-          )
         ],
       )),
       backgroundColor: bgColor,

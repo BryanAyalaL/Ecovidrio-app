@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Fryo',
+      title: 'Eco vidrio',
+      debugShowCheckedModeBanner: false, // Oculta la etiqueta de depuración
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
