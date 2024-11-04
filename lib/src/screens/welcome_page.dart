@@ -33,7 +33,7 @@ class WelcomePageState extends State<WelcomePage> {
           Container(
             width: 200,
             margin: EdgeInsets.only(bottom: 0),
-            child: froyoTextBtn('Iniciar sección', () {
+            child: froyoTextBtn('Iniciar sesion', () {
               Navigator.pushReplacement(
                   context,
                   PageTransition(

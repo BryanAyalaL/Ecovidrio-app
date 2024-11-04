@@ -20,7 +20,7 @@ class SignInPageState extends State<SignInPage> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: white,
-          title: Text('Iniciar sección',
+          title: Text('Iniciar sesion',
               style: TextStyle(
                   color: Colors.grey, fontFamily: 'Poppins', fontSize: 15)),
           actions: <Widget>[
