@@ -6,6 +6,7 @@ import '../shared/color.dart';
 import '../shared/input_fields.dart';
 import './signin.dart';
 import './dashboard.dart';
+import '../Validaciones/validaciones.dart'; // Importa las validaciones
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -13,80 +14,97 @@ class SignUpPage extends StatefulWidget {
 }
 
 class SignUpPageState extends State<SignUpPage> {
+  final _formKey = GlobalKey<FormState>(); // Añadido para validar el formulario
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void _validateAndSubmit() {
+    if (_formKey.currentState?.validate() ?? false) {
+      // Si la validación es exitosa, navega al Dashboard
+      Navigator.pushReplacement(
+        context,
+        PageTransition(
+          alignment: Alignment.center,
+          type: PageTransitionType.rightToLeft,
+          child: Dashboard(),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: white,
-          title: Text('Sign Up',
-              style: TextStyle(
-                  color: Colors.grey, fontFamily: 'Poppins', fontSize: 15)),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                // Navigator.of(context).pushReplacementNamed('/signin');
-                Navigator.pushReplacement(
-                  context,
-                  PageTransition(
-                    alignment: Alignment.center,
-                    type: PageTransitionType.rightToLeft,
-                    child: SignInPage(),
-                  ),
-                );
-              },
-              child: Text('Sign In', style: contrastText),
-            )
-          ],
-        ),
-        body: ListView(
-          shrinkWrap: true,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 18, right: 18),
-              height: 360,
-              width: double.infinity,
-              decoration: authPlateDecoration,
-              child: Stack(
-                children: <Widget>[
-                  Column(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: white,
+        title: Text('Registrarse',
+            style: TextStyle(color: Colors.grey, fontFamily: 'Poppins', fontSize: 15)),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                PageTransition(
+                  alignment: Alignment.center,
+                  type: PageTransitionType.rightToLeft,
+                  child: SignInPage(),
+                ),
+              );
+            },
+            child: Text('Iniciar sesión', style: contrastText),
+          ),
+        ],
+      ),
+      body: ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(left: 18, right: 18),
+            height: 300,
+            width: double.infinity,
+            decoration: authPlateDecoration,
+            child: Stack(
+              children: <Widget>[
+                Form(
+                  key: _formKey, // Asocia el formulario con la clave
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text('Welcome to Fryo!', style: h3),
-                      Text('Let\'s get started', style: taglineText),
-                      fryoTextInput('Username'),
-                      fryoTextInput('Full Name'),
-                      fryoEmailInput('Email Address'),
-                      fryoPasswordInput('Password')
+                      Text('Bienvenido a Eco vidrio!', style: h3),
+                      Text('Comencemos', style: taglineText),
+                      fryoEmailInput(
+                        'Correo electrónico',
+                        controller: _emailController,
+                        validator: (value) => InputValidator.validateEmail(value ?? ''),
+                      ),
+                      fryoPasswordInput(
+                        'Contraseña',
+                        controller: _passwordController,
+                        validator: (value) => InputValidator.validatePassword(value ?? ''),
+                      ),
                     ],
                   ),
-                  Positioned(
-                    bottom: 15,
-                    right: -15,
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          PageTransition(
-                            alignment: Alignment.center,
-                            type: PageTransitionType.rightToLeft,
-                            child: Dashboard(),
-                          ),
-                        );
-                      },
-                      style: TextButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        padding: EdgeInsets.all(13),
-                        shape: CircleBorder(),
-                      ),
-                      child: Icon(Icons.arrow_forward, color: white),
+                ),
+                Positioned(
+                  bottom: 15,
+                  right: -15,
+                  child: TextButton(
+                    onPressed: _validateAndSubmit, // Valida antes de enviar
+                    style: TextButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      padding: EdgeInsets.all(13),
+                      shape: CircleBorder(),
                     ),
-                  )
-                ],
-              ),
+                    child: Icon(Icons.arrow_forward, color: white),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }
