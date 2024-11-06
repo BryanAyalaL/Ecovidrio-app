@@ -1,0 +1,10 @@
+^C:\USERS\JUAN PABLO\ONEDRIVE\ESCRITORIO\ECOVIDRIO-APP\BUILD\WINDOWS\X64\CMAKEFILES\94DE10FB5AEB480B7BB5B64844E6AE26\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SC:/Users/juan pablo/OneDrive/Escritorio/Ecovidrio-app/windows" "-BC:/Users/juan pablo/OneDrive/Escritorio/Ecovidrio-app/build/windows/x64" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Users/juan pablo/OneDrive/Escritorio/Ecovidrio-app/build/windows/x64/ecovidrio_v1.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

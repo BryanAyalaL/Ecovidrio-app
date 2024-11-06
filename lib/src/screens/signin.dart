@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -7,6 +6,7 @@ import '../shared/color.dart';
 import '../shared/input_fields.dart';
 import './singup.dart';
 import './dashboard.dart';
+import '../Validaciones/validaciones.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -14,93 +14,108 @@ class SignInPage extends StatefulWidget {
 }
 
 class SignInPageState extends State<SignInPage> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void _validateAndSubmit() {
+    if (_formKey.currentState?.validate() ?? false) {
+      Navigator.pushReplacement(
+        context,
+        PageTransition(
+          alignment: Alignment.center,
+          type: PageTransitionType.rightToLeft,
+          child: Dashboard(),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: white,
-          title: Text('Iniciar sesion',
-              style: TextStyle(
-                  color: Colors.grey, fontFamily: 'Poppins', fontSize: 15)),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                // Navigator.of(context).pushReplacementNamed('/signup');
-                Navigator.pushReplacement(
-                  context,
-                  PageTransition(
-                    alignment: Alignment.center,
-                    type: PageTransitionType.rightToLeft,
-                    child: SignUpPage(),
-                  ),
-                );
-              },
-              child: Text('Registrase', style: contrastText),
-            )
-          ],
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: white,
+        title: Text(
+          'Iniciar sesión',
+          style: TextStyle(
+              color: Colors.grey, fontFamily: 'Poppins', fontSize: 15),
         ),
-        body: ListView(
-          shrinkWrap: true,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 18, right: 18),
-              height: 245,
-              width: double.infinity,
-              decoration: authPlateDecoration,
-              child: Stack(
-                children: <Widget>[
-                  Column(
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                PageTransition(
+                  alignment: Alignment.center,
+                  type: PageTransitionType.rightToLeft,
+                  child: SignUpPage(),
+                ),
+              );
+            },
+            child: Text('Registrarse', style: contrastText),
+          )
+        ],
+      ),
+      body: ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(left: 18, right: 18),
+            height: 300,
+            width: double.infinity,
+            decoration: authPlateDecoration,
+            child: Stack(
+              children: <Widget>[
+                Form(
+                  key: _formKey,
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text('Bienvenido de nuevo', style: h3),
-                      Text('hola, vamos a autenticarte', style: taglineText),
-                      fryoTextInput('Correo eletronico'),
-                      fryoPasswordInput('Contraseña'),
+                      Text('Hola, vamos a autenticarte', style: taglineText),
+                      fryoEmailInput(
+                        'Correo electrónico',
+                        controller: _emailController,
+                        validator: (value) => InputValidator.validateEmail(value ?? ''),
+                      ),
+                      fryoPasswordInput(
+                        'Contraseña',
+                        controller: _passwordController,
+                        validator: (value) => InputValidator.validatePassword(value ?? ''),
+                      ),
                       TextButton(
                         onPressed: () {
-                          /*Navigator.push(
-                            context,
-                            PageTransition(
-                              alignment: Alignment.center,
-                              type: PageTransitionType.fade,
-                              duration: Duration(milliseconds: 300),
-                              child: recuperar_contraseñaPage(),
-                            ),
-                          );*/
+                          // Acción para recuperar contraseña
                         },
-                        child:
-                            Text('Olvidaste la contraseña?', style: contrastTextBold),
-                      )
+                        child: Text(
+                          '¿Olvidaste la contraseña?',
+                          style: contrastTextBold,
+                        ),
+                      ),
                     ],
                   ),
-                  Positioned(
-                    bottom: 15,
-                    right: -15,
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          PageTransition(
-                            alignment: Alignment.center,
-                            type: PageTransitionType.rightToLeft,
-                            child: Dashboard(),
-                          ),
-                        );
-                      },
-                      style: TextButton.styleFrom(
-                        backgroundColor: primaryColor, // Button color
-                        padding: EdgeInsets.all(13),
-                        shape: CircleBorder(),
-                      ),
-                      child: Icon(Icons.arrow_forward, color: Colors.white),
+                ),
+                Positioned(
+                  bottom: 15,
+                  right: -15,
+                  child: TextButton(
+                    onPressed: _validateAndSubmit,
+                    style: TextButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      padding: EdgeInsets.all(13),
+                      shape: CircleBorder(),
                     ),
-                  )
-                ],
-              ),
+                    child: Icon(Icons.arrow_forward, color: Colors.white),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }

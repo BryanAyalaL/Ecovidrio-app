@@ -1,0 +1,1 @@
+ C:\\Users\\juan\ pablo\\OneDrive\\Escritorio\\Ecovidrio-app\\.dart_tool\\flutter_build\\f69022414f0bad81bb32bfefedeb16cb\\native_assets.yaml: 
