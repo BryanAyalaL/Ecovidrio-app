@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'src/screens/signin.dart';
 import 'src/screens/singup.dart';
 import 'src/screens/welcome_page.dart';
-import 'src/screens/resultado_page.dart';
+import 'src/screens/major.dart';
 import 'src/screens/producto.dart';
 import 'src/shared/producto.dart';
 //import 'src/internal/mysql/mysql_client.dart';
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/signup': (BuildContext context) => SignUpPage(),
         '/signin': (BuildContext context) => SignInPage(),
-        '/resultadoPage': (BuildContext context) => ResultadoPagePage(),
+        '/inicio': (BuildContext context) => MajorPage(),
         '/productPage': (BuildContext context) => ProductPage(productData: Product()),
       },
     );

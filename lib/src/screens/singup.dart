@@ -5,7 +5,6 @@ import '../shared/styles.dart';
 import '../shared/color.dart';
 import '../shared/input_fields.dart';
 import './signin.dart';
-import './dashboard.dart';
 import '../Validaciones/validaciones.dart'; // Importa las validaciones
 
 class SignUpPage extends StatefulWidget {
@@ -26,7 +25,7 @@ class SignUpPageState extends State<SignUpPage> {
         PageTransition(
           alignment: Alignment.center,
           type: PageTransitionType.rightToLeft,
-          child: Dashboard(),
+          child: SignInPage(),
         ),
       );
     }
@@ -72,7 +71,7 @@ class SignUpPageState extends State<SignUpPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text('Bienvenido a Eco vidrio!', style: h3),
+                      Text('Bienvenido a Eco vidrio', style: h3),
                       Text('Comencemos', style: taglineText),
                       fryoEmailInput(
                         'Correo electrónico',
