@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '/src/screens/resultado_page.dart';
+import 'src/screens/resultado_color_page.dart';
+import 'src/screens/resultado_peso_page.dart';
 import 'src/screens/signin.dart';
 import 'src/screens/singup.dart';
 import 'src/screens/welcome_page.dart';
@@ -41,6 +44,9 @@ class MyApp extends StatelessWidget {
         '/signin': (BuildContext context) => SignInPage(),
         '/inicio': (BuildContext context) => MajorPage(),
         '/productPage': (BuildContext context) => ProductPage(productData: Product()),
+        '/resultado_peso_page': (BuildContext context) => ResultadoPesoPage(),
+        '/resultado_color_page': (BuildContext context) => ResultadoColorPage(),
+        '/resultado_page': (BuildContext context) => ResultadoPage(),
       },
     );
   }

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class ResultadoColorPage extends StatelessWidget {
+class ResultadoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Resultado Color'),
+        title: Text('Resultados'),
       ),
       body: Center(
-        child: Text('Esta es la página de Resultado Color'),
+        child: Text('Esta es la página de Resultados'),
       ),
     );
   }

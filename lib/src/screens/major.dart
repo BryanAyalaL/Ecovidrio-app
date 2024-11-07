@@ -74,7 +74,7 @@ class MajorPageState extends State<MajorPage> {
                       title: Text('Resultado'),
                       onTap: () {
                         Navigator.of(context).pop();
-                        Navigator.of(context).pushNamed('/no_definido_aun');
+                        Navigator.of(context).pushNamed('/resultado_page');
                       },
                     )
                   ],
@@ -175,7 +175,7 @@ class MajorPageState extends State<MajorPage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).pushNamed('/resultado_color_page');
+                Navigator.of(context).pushNamed('/resultado_page');
               },
               child: Container(
                 padding: EdgeInsets.all(20),
@@ -194,7 +194,7 @@ class MajorPageState extends State<MajorPage> {
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.palette, color: Colors.purple, size: 30),
+                    Icon(Icons.assessment, color: Colors.purple, size: 30),
                     SizedBox(width: 15),
                     Text(
                       'Resultado',
