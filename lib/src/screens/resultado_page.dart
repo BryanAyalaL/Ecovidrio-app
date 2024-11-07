@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ResultadoPage extends StatelessWidget {
+// StatefulWidget para la página de resultado
+class ResultadoPagePage extends StatefulWidget {
+  @override
+  ResultadoPageState createState() => ResultadoPageState();
+}
+
+// Estado para la página de resultado
+class ResultadoPageState extends State<ResultadoPagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,3 +20,4 @@ class ResultadoPage extends StatelessWidget {
     );
   }
 }
+

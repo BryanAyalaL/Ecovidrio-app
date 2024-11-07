@@ -5,7 +5,7 @@ import '../shared/styles.dart';
 import '../shared/color.dart';
 import '../shared/input_fields.dart';
 import './singup.dart';
-import './dashboard.dart';
+import 'resultado_page.dart';
 import '../Validaciones/validaciones.dart';
 
 class SignInPage extends StatefulWidget {
@@ -25,7 +25,7 @@ class SignInPageState extends State<SignInPage> {
         PageTransition(
           alignment: Alignment.center,
           type: PageTransitionType.rightToLeft,
-          child: Dashboard(),
+          child: ResultadoPagePage(),
         ),
       );
     }

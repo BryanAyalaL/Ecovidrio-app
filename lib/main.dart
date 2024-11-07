@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'src/screens/signin.dart';
 import 'src/screens/singup.dart';
 import 'src/screens/welcome_page.dart';
-import 'src/screens/dashboard.dart';
+import 'src/screens/resultado_page.dart';
 import 'src/screens/producto.dart';
 import 'src/shared/producto.dart';
-import 'src/internal/mysql/mysql_client.dart';
+//import 'src/internal/mysql/mysql_client.dart';
 
 
 void main() => runApp(MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
 
 
   // Instantiate the database
-  final db = Database();
+  //final db = Database();
 /* 
 
   await db.connect();
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/signup': (BuildContext context) => SignUpPage(),
         '/signin': (BuildContext context) => SignInPage(),
-        '/dashboard': (BuildContext context) => Dashboard(),
+        '/resultadoPage': (BuildContext context) => ResultadoPagePage(),
         '/productPage': (BuildContext context) => ProductPage(productData: Product()),
       },
     );
