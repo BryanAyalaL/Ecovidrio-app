@@ -11,12 +11,11 @@ import 'src/screens/major.dart';
 import 'src/screens/producto.dart';
 import 'src/shared/producto.dart';
 //import 'src/internal/mysql/mysql_client.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 
 void main() => runApp(MyApp());
-
+/*
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -78,8 +77,8 @@ class _UserListState extends State<UserList> {
     );
   }
 }
+*/
 
-/*
 class MyApp extends StatelessWidget {
   // This widget is the root of the application.
   @override
@@ -117,4 +116,4 @@ class MyApp extends StatelessWidget {
       },
     );
   }
-}*/
+}

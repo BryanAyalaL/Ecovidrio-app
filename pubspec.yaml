@@ -1,5 +1,5 @@
 name: fryo
-description: A food ordering app template kit.
+description: Aplicación movil para el proyecto Eco-vidrio.
 
 version: 1.0.0+1
 
@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.2.2  # Añade esta línea para realizar solicitudes HTTP
+  #http:any para acceder a todas sus versiones
 
 
   cupertino_icons: ^1.0.6
