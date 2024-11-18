@@ -9,7 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.2.2  # Añade esta línea para realizar solicitudes HTTP
+  http: ^1.2.2
+  intl: ^0.18.0  # Añade esta línea para realizar solicitudes HTTP
   #http:any para acceder a todas sus versiones
 
 

@@ -86,6 +86,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///C:/Users/juan%20pablo/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.18.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "leak_tracker",
       "rootUri": "file:///C:/Users/juan%20pablo/AppData/Local/Pub/Cache/hosted/pub.dev/leak_tracker-10.0.5",
       "packageUri": "lib/",
@@ -230,7 +236,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-11-18T20:37:02.198402Z",
+  "generated": "2024-11-18T20:45:05.216402Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///C:/dev/flutter_windows_3.24.4-stable/flutter",
