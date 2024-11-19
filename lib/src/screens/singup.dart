@@ -1,11 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../shared/styles.dart';
 import '../shared/color.dart';
 import '../shared/input_fields.dart';
 import './signin.dart';
 import '../Validaciones/validaciones.dart'; // Importa las validaciones
+
+// Función para registrar un nuevo usuario
+Future<void> registerUser(String email, String password, BuildContext context) async {
+  final url = 'http://10.0.2.2:3000/registro';  // URL de tu API (para emulador)
+  final headers = {'Content-Type': 'application/json'};
+  final body = json.encode({
+    'email': email,
+    'contrasena': password,
+  });
+
+  try {
+    final response = await http.post(Uri.parse(url), headers: headers, body: body);
+
+    if (response.statusCode == 201) {
+      // Registro exitoso
+      print('Usuario registrado exitosamente');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Usuario registrado exitosamente')),
+      );
+    } else {
+      // Manejo de errores
+      final responseData = json.decode(response.body);
+      print('Error: ${responseData['error']}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${responseData['error']}')),
+      );
+    }
+  } catch (e) {
+    print('Error al conectar con la API: $e');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error al conectar con el servidor')),
+    );
+  }
+}
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -13,13 +48,17 @@ class SignUpPage extends StatefulWidget {
 }
 
 class SignUpPageState extends State<SignUpPage> {
-  final _formKey = GlobalKey<FormState>(); // Añadido para validar el formulario
+  final _formKey = GlobalKey<FormState>(); // Clave para validar el formulario
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _validateAndSubmit() {
+  // Función para validar y enviar el formulario
+  void _validateAndSubmit() async {
     if (_formKey.currentState?.validate() ?? false) {
-      // Si la validación es exitosa, navega al Dashboard
+      // Si la validación es exitosa, registra al usuario
+      await registerUser(_emailController.text, _passwordController.text, context);
+
+      // Navega a la siguiente pantalla si el registro fue exitoso
       Navigator.pushReplacement(
         context,
         PageTransition(
@@ -66,7 +105,7 @@ class SignUpPageState extends State<SignUpPage> {
             child: Stack(
               children: <Widget>[
                 Form(
-                  key: _formKey, // Asocia el formulario con la clave
+                  key: _formKey, // Asociamos el formulario con la clave
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,12 +115,18 @@ class SignUpPageState extends State<SignUpPage> {
                       fryoEmailInput(
                         'Correo electrónico',
                         controller: _emailController,
-                        validator: (value) => InputValidator.validateEmail(value ?? ''),
+                        validator: (value) {
+                          print('Validando email: $value');
+                          return InputValidator.validateEmail(value ?? '');
+                        },
                       ),
                       fryoPasswordInput(
                         'Contraseña',
                         controller: _passwordController,
-                        validator: (value) => InputValidator.validatePassword(value ?? ''),
+                        validator: (value) {
+                          print('Validando contraseña: $value');
+                          return InputValidator.validatePassword(value ?? '');
+                        },
                       ),
                     ],
                   ),
