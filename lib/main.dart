@@ -1,4 +1,4 @@
-import 'dart:convert';
+//import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import '/src/screens/resultado_page.dart';
@@ -11,7 +11,7 @@ import 'src/screens/major.dart';
 import 'src/screens/producto.dart';
 import 'src/shared/producto.dart';
 //import 'src/internal/mysql/mysql_client.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 
 
 void main() => runApp(MyApp());

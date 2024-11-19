@@ -44,10 +44,22 @@
       "languageVersion": "3.1"
     },
     {
+      "name": "equatable",
+      "rootUri": "file:///C:/Users/juan%20pablo/AppData/Local/Pub/Cache/hosted/pub.dev/equatable-2.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "fake_async",
       "rootUri": "file:///C:/Users/juan%20pablo/AppData/Local/Pub/Cache/hosted/pub.dev/fake_async-1.3.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "fl_chart",
+      "rootUri": "file:///C:/Users/juan%20pablo/AppData/Local/Pub/Cache/hosted/pub.dev/fl_chart-0.69.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
     },
     {
       "name": "flutter",
@@ -236,10 +248,10 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-11-19T03:46:53.311218Z",
+  "generated": "2024-11-19T16:40:25.672401Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///C:/dev/flutter_windows_3.24.4-stable/flutter",
-  "flutterVersion": "3.24.4",
+  "flutterVersion": "3.24.5",
   "pubCache": "file:///C:/Users/juan%20pablo/AppData/Local/Pub/Cache"
 }
