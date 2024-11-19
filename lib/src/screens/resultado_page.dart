@@ -50,13 +50,26 @@ Future<List<Resultado>> fetchResultados() async {
 String formatFecha(String fecha) {
   try {
     DateTime fechaParseada = DateTime.parse(fecha);
-    return DateFormat('dd MMM yyyy').format(fechaParseada);  // Formato "dd MMM yyyy"
+    return DateFormat('dd MMM yyyy').format(fechaParseada); // Formato "dd MMM yyyy"
   } catch (e) {
     return fecha;
   }
 }
 
-// Widget para mostrar el gráfico de barras de peso
+// Calcular los porcentajes por color
+Map<String, double> calcularPorcentajes(List<Resultado> resultados) {
+  final Map<String, double> conteoColores = {};
+  for (var resultado in resultados) {
+    if (resultado.color.isNotEmpty) {
+      conteoColores[resultado.color] = (conteoColores[resultado.color] ?? 0) + 1;
+    }
+  }
+
+  final total = conteoColores.values.reduce((a, b) => a + b);
+  return conteoColores.map((color, count) => MapEntry(color, (count / total) * 100));
+}
+
+// Widget para el gráfico de barras de peso
 class PesoBarChart extends StatelessWidget {
   final List<Resultado> resultados;
 
@@ -78,9 +91,9 @@ class PesoBarChart extends StatelessWidget {
             barRods: [
               BarChartRodData(
                 toY: resultado.peso,
-                color: Colors.teal,  // Color de las barras
+                color: Colors.teal, // Color de las barras
                 width: 18,
-                borderRadius: BorderRadius.circular(8),  // Bordes redondeados
+                borderRadius: BorderRadius.circular(8), // Bordes redondeados
               ),
             ],
           );
@@ -95,7 +108,7 @@ class PesoBarChart extends StatelessWidget {
           barGroups: barData,
           titlesData: FlTitlesData(
             leftTitles: AxisTitles(
-              sideTitles: SideTitles(showTitles: false),  // Se desactivó la visualización del eje Y
+              sideTitles: SideTitles(showTitles: false), // Se desactivó la visualización del eje Y
             ),
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
@@ -103,7 +116,7 @@ class PesoBarChart extends StatelessWidget {
                 getTitlesWidget: (value, meta) {
                   if (value.toInt() < resultados.length) {
                     return Text(
-                      formatFecha(resultados[value.toInt()].fecha),  // Usamos la fecha formateada
+                      formatFecha(resultados[value.toInt()].fecha), // Usamos la fecha formateada
                       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.teal),
                     );
                   }
@@ -115,10 +128,57 @@ class PesoBarChart extends StatelessWidget {
             ),
           ),
           borderData: FlBorderData(show: false),
-          gridData: FlGridData(show: true, drawVerticalLine: false),  // Mejorar la cuadrícula
+          gridData: FlGridData(show: true, drawVerticalLine: false), // Mejorar la cuadrícula
         ),
       ),
     );
+  }
+}
+
+// Widget para el gráfico de pastel
+class ColorPieChart extends StatelessWidget {
+  final Map<String, double> porcentajes;
+
+  ColorPieChart({required this.porcentajes});
+
+  @override
+  Widget build(BuildContext context) {
+    if (porcentajes.isEmpty) {
+      return Center(child: Text('No hay colores disponibles para mostrar.'));
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: PieChart(
+        PieChartData(
+          sections: porcentajes.entries.map((entry) {
+            final color = _colorFromString(entry.key);
+            return PieChartSectionData(
+              value: entry.value,
+              title: '${entry.value.toStringAsFixed(1)}%',
+              color: color,
+              radius: 50,
+              titleStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+            );
+          }).toList(),
+          sectionsSpace: 2,
+          centerSpaceRadius: 40,
+        ),
+      ),
+    );
+  }
+
+  // Función para convertir nombres de colores a objetos de Color
+  Color _colorFromString(String colorName) {
+    final colorMap = {
+      'rojo': Colors.red,
+      'azul': Colors.blue,
+      'verde': Colors.green,
+      'amarillo': Colors.yellow,
+      'morado': Colors.purple,
+      'naranja': Colors.orange,
+    };
+    return colorMap[colorName.toLowerCase()] ?? Colors.grey;
   }
 }
 
@@ -134,7 +194,7 @@ class _ResultadoPageState extends State<ResultadoPage> {
   @override
   void initState() {
     super.initState();
-    _resultados = fetchResultados();  // Llamada a la API
+    _resultados = fetchResultados(); // Llamada a la API
   }
 
   @override
@@ -142,8 +202,8 @@ class _ResultadoPageState extends State<ResultadoPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Resultados', style: TextStyle(fontWeight: FontWeight.normal)),
-        backgroundColor: Colors.transparent,  // Fondo transparente
-        elevation: 0,  // Sin sombra
+        backgroundColor: Colors.transparent, // Fondo transparente
+        elevation: 0, // Sin sombra
       ),
       body: FutureBuilder<List<Resultado>>(
         future: _resultados,
@@ -157,6 +217,8 @@ class _ResultadoPageState extends State<ResultadoPage> {
           }
 
           final resultados = snapshot.data!;
+          final coloresValidos = resultados.where((r) => r.color.isNotEmpty).toList();
+          final porcentajes = calcularPorcentajes(coloresValidos);
 
           return SingleChildScrollView(
             child: Column(
@@ -171,6 +233,17 @@ class _ResultadoPageState extends State<ResultadoPage> {
                 SizedBox(
                   height: 400,
                   child: PesoBarChart(resultados: resultados),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Text(
+                    'Distribución por Color',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.teal),
+                  ),
+                ),
+                SizedBox(
+                  height: 300,
+                  child: ColorPieChart(porcentajes: porcentajes),
                 ),
               ],
             ),
