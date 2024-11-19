@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import '../shared/styles.dart';
 import '../shared/color.dart';
@@ -7,6 +9,84 @@ import '../shared/input_fields.dart';
 import './singup.dart';
 import 'major.dart';
 import '../Validaciones/validaciones.dart';
+
+// Función para registrar un nuevo usuario
+Future<void> registerUser(String email, String password, BuildContext context) async {
+  final url = 'http://10.0.2.2:3000/registro';  // URL de la API (para emulador)
+  final headers = {'Content-Type': 'application/json'};
+  final body = json.encode({
+    'email': email,
+    'contrasena': password,
+  });
+
+  try {
+    final response = await http.post(Uri.parse(url), headers: headers, body: body);
+
+    if (response.statusCode == 201) {
+      // Registro exitoso
+      print('Usuario registrado exitosamente');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Usuario registrado exitosamente')),
+      );
+    } else {
+      // Manejo de errores
+      final responseData = json.decode(response.body);
+      print('Error: ${responseData['error']}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${responseData['error']}')),
+      );
+    }
+  } catch (e) {
+    print('Error al conectar con la API: $e');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error al conectar con el servidor')),
+    );
+  }
+}
+
+// Función para iniciar sesión
+Future<void> loginUser(String email, String password, BuildContext context) async {
+  final url = 'http://10.0.2.2:3000/login';  // URL de la API
+
+  final headers = {'Content-Type': 'application/json'};
+  final body = json.encode({
+    'email': email,
+    'contrasena': password,
+  });
+
+  try {
+    final response = await http.post(Uri.parse(url), headers: headers, body: body);
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      final message = responseData['message']; // Obtén el mensaje de la respuesta
+      final userId = responseData['userId']; // Obtén el userId si es necesario
+
+      // Mostrar el mensaje de éxito y navegar
+      print('Inicio de sesión exitoso: $message');
+      Navigator.pushReplacement(
+        context,
+        PageTransition(
+          alignment: Alignment.center,
+          type: PageTransitionType.rightToLeft,
+          child: MajorPage(),  // Redirigir a la página principal
+        ),
+      );
+    } else {
+      final responseData = json.decode(response.body);
+      final errorMessage = responseData['error'];  // Obtener el error de la respuesta
+      print('Error: $errorMessage');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(errorMessage),
+      ));
+    }
+  } catch (e) {
+    print('Error al conectar con la API: $e');
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Error al conectar con el servidor.'),
+    ));
+  }
+}
 
 class SignInPage extends StatefulWidget {
   @override
@@ -18,16 +98,11 @@ class SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _validateAndSubmit() {
+  // Función para validar y enviar el formulario
+  void _validateAndSubmit() async {
     if (_formKey.currentState?.validate() ?? false) {
-      Navigator.pushReplacement(
-        context,
-        PageTransition(
-          alignment: Alignment.center,
-          type: PageTransitionType.rightToLeft,
-          child: MajorPage(),
-        ),
-      );
+      // Si la validación es exitosa, inicia sesión
+      await loginUser(_emailController.text, _passwordController.text, context);
     }
   }
 
@@ -39,8 +114,7 @@ class SignInPageState extends State<SignInPage> {
         backgroundColor: white,
         title: Text(
           'Iniciar sesión',
-          style: TextStyle(
-              color: Colors.grey, fontFamily: 'Poppins', fontSize: 15),
+          style: TextStyle(color: Colors.grey, fontFamily: 'Poppins', fontSize: 15),
         ),
         actions: <Widget>[
           TextButton(
@@ -90,10 +164,7 @@ class SignInPageState extends State<SignInPage> {
                         onPressed: () {
                           // Acción para recuperar contraseña
                         },
-                        child: Text(
-                          '¿Olvidaste la contraseña?',
-                          style: contrastTextBold,
-                        ),
+                        child: Text('¿Olvidaste la contraseña?', style: contrastTextBold),
                       ),
                     ],
                   ),
@@ -102,7 +173,7 @@ class SignInPageState extends State<SignInPage> {
                   bottom: 15,
                   right: -15,
                   child: TextButton(
-                    onPressed: _validateAndSubmit,
+                    onPressed: _validateAndSubmit,  // Valida antes de enviar
                     style: TextButton.styleFrom(
                       backgroundColor: primaryColor,
                       padding: EdgeInsets.all(13),
