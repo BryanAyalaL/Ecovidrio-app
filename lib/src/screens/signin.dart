@@ -160,12 +160,7 @@ class SignInPageState extends State<SignInPage> {
                         controller: _passwordController,
                         validator: (value) => InputValidator.validatePassword(value ?? ''),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          // Acción para recuperar contraseña
-                        },
-                        child: Text('¿Olvidaste la contraseña?', style: contrastTextBold),
-                      ),
+                    
                     ],
                   ),
                 ),

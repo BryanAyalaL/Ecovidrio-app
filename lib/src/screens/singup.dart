@@ -9,8 +9,8 @@ import './signin.dart';
 import '../Validaciones/validaciones.dart'; // Importa las validaciones
 
 // Función para registrar un nuevo usuario
-Future<void> registerUser(String email, String password, BuildContext context) async {
-  final url = 'http://10.0.2.2:3000/registro';  // URL de tu API (para emulador)
+Future<bool> registerUser(String email, String password, BuildContext context) async {
+  final url = 'http://10.0.2.2:3000/registro'; // URL de la API (para emulador)
   final headers = {'Content-Type': 'application/json'};
   final body = json.encode({
     'email': email,
@@ -26,19 +26,23 @@ Future<void> registerUser(String email, String password, BuildContext context) a
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Usuario registrado exitosamente')),
       );
+      return true; // Indica éxito
     } else {
       // Manejo de errores
       final responseData = json.decode(response.body);
-      print('Error: ${responseData['error']}');
+      final errorMessage = responseData['error']; // Obtener el error del servidor
+      print('Error: $errorMessage');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${responseData['error']}')),
+        SnackBar(content: Text('Error: $errorMessage')),
       );
+      return false; // Indica fallo
     }
   } catch (e) {
     print('Error al conectar con la API: $e');
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Error al conectar con el servidor')),
     );
+    return false; // Indica fallo
   }
 }
 
@@ -55,18 +59,24 @@ class SignUpPageState extends State<SignUpPage> {
   // Función para validar y enviar el formulario
   void _validateAndSubmit() async {
     if (_formKey.currentState?.validate() ?? false) {
-      // Si la validación es exitosa, registra al usuario
-      await registerUser(_emailController.text, _passwordController.text, context);
-
-      // Navega a la siguiente pantalla si el registro fue exitoso
-      Navigator.pushReplacement(
+      // Si la validación es exitosa, intenta registrar al usuario
+      bool success = await registerUser(
+        _emailController.text,
+        _passwordController.text,
         context,
-        PageTransition(
-          alignment: Alignment.center,
-          type: PageTransitionType.rightToLeft,
-          child: SignInPage(),
-        ),
       );
+
+      // Solo navega si el registro fue exitoso
+      if (success) {
+        Navigator.pushReplacement(
+          context,
+          PageTransition(
+            alignment: Alignment.center,
+            type: PageTransitionType.rightToLeft,
+            child: SignInPage(),
+          ),
+        );
+      }
     }
   }
 

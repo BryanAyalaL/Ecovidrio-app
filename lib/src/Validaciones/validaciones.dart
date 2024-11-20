@@ -14,7 +14,7 @@ class InputValidator {
     if (value.isEmpty) {
       return 'La contraseña es requerida.';
     } else if (value.length < 3) {
-      return 'La contraseña debe tener al menos 8 caracteres.';
+      return 'La contraseña debe tener al menos 3 caracteres.';
     }
     return null;
   }
