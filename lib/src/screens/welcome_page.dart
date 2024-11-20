@@ -25,7 +25,7 @@ class WelcomePageState extends State<WelcomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Image.asset('images/welcome.png', width: 190, height: 190),
+          Image.asset('images/vidrio.png', width: 190, height: 190),
           Container(
             margin: EdgeInsets.only(bottom: 10, top: 0),
             child: Text('Eco vidrio', style: logoStyle),
