@@ -120,7 +120,7 @@ class SignUpPageState extends State<SignUpPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text('Bienvenido a Eco vidrio', style: h3),
+                      Text('Bienvenido a Eco-vidrio', style: h3),
                       Text('Comencemos', style: taglineText),
                       fryoEmailInput(
                         'Correo electrónico',

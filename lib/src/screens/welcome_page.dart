@@ -28,12 +28,12 @@ class WelcomePageState extends State<WelcomePage> {
           Image.asset('images/vidrio.png', width: 130, height: 130),
           Container(
             margin: EdgeInsets.only(bottom: 10, top: 0),
-            child: Text('Eco vidrio', style: logoStyle),
+            child: Text('Eco-vidrio', style: logoStyle),
           ),
           Container(
             width: 200,
             margin: EdgeInsets.only(bottom: 0),
-            child: froyoTextBtn('Iniciar sesion', () {
+            child: froyoTextBtn('Iniciar sesión', () {
               Navigator.pushReplacement(
                   context,
                   PageTransition(
@@ -46,7 +46,7 @@ class WelcomePageState extends State<WelcomePage> {
           Container(
             width: 200,
             padding: EdgeInsets.all(0),
-            child: froyoOutlinedBtn('Registrase', () {
+            child: froyoOutlinedBtn('Registrarse', () {
               Navigator.pushReplacement(
                   context,
                   PageTransition(
